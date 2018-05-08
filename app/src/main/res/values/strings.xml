@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Coffeshop app</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="location_rationale">Application can\'t work without location</string>
+    <string name="enable">Enable</string>
+    <string name="gps_rationale">Application can\'t work without GPS</string>
+    <string name="no_internet_connection">Check your internet connection</string>
+</resources>

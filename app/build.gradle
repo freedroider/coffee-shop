@@ -1,0 +1,80 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.prospektdev.coffeeshopapp"
+        minSdkVersion 21
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            debuggable true
+        }
+
+        all {
+            buildConfigField("String", "PLACES_API_BASE_URL", "\"https://maps.googleapis.com/maps/api/place/\"")
+            buildConfigField("String", "PLACES_API_KEY", "\"AIzaSyBARkx2O6dt1qfeNQgHet2J5rqwTITL8k8\"")
+        }
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            String apkVersion = "${variant.buildType.name}-v${variant.versionName}.(${variant.versionCode})"
+            outputFileName = "CoffeeShopApp-${apkVersion}.apk"
+            buildConfigField("String", "APP_VERSION_NAME", "\"${apkVersion}\"")
+        }
+    }
+
+    kapt {
+        generateStubs = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    //kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    //support
+    def support_version = "27.1.1"
+    implementation "com.android.support:appcompat-v7:$support_version"
+    implementation "com.android.support:design:$support_version"
+    implementation "com.android.support:recyclerview-v7:$support_version"
+    implementation "com.android.support:cardview-v7:$support_version"
+    //android components
+    def lifecycle_version = "1.1.1"
+    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+    //constraint
+    def constraint_version = "1.1.0"
+    implementation "com.android.support.constraint:constraint-layout:$constraint_version"
+    //Dagger2
+    def dagger_version = '2.15'
+    implementation "com.google.dagger:dagger-android:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+    //gms
+    def gms_version = '15.0.1'
+    implementation "com.google.android.gms:play-services-maps:$gms_version"
+    implementation "com.google.android.gms:play-services-places:$gms_version"
+    implementation "com.google.android.gms:play-services-location:$gms_version"
+}
